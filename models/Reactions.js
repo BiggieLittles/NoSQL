@@ -1,35 +1,33 @@
-// Import schema
-const { Types, Schema } = require('mongoose');
-// import reactions 
-const reactionsSchema = new Schema(
+const { Schema, Types } = require('mongoose');
+
+const reactionSchema = new Schema(
   {
-    reactionsId: {
+    reactionId: {
       type: Schema.Types.ObjectId,
-      default: () => new Types.ObjectId(),
+      default: () => new Types.ObjectId(), 
     },
-    reactionsBody: {
+    reactionBody: {
       type: String,
       required: true,
-      maxLength: 280,
+      max: 280
     },
     username: {
       type: String,
       required: true,
     },
-    postedBy: {
+    createdAt: {
       type: Date,
       default: Date.now,
-      get: timestamp => new Date(timestamp).toLocaleDateString()
-    },
+      // get: date => date.toLocaleDateString()
+    }
   },
   {
     toJSON: {
       getters: true,
-    },
-    id: false,
+    }
   }
 );
 
-//module exports
 
-module.exports = reactionsSchema
+// just exporting schema for use as subdoc in 'Thought' model
+module.exports = reactionSchema;

@@ -1,19 +1,18 @@
-const express =require('express');
-// Import express .js files
-const app = express();
-const connect =require('./config/connection');
-// Import routes files
-const routes =require ('./routes');
-const PORT = process.env.PORT || 3001;
+const express = require('express');
+const routes = require('./routes');
+const db = require('./config/connection');
 
-app.use(express.urlencoded({ extended: true }));
+const PORT = 3001;
+const app = express();
+
 app.use(express.json());
-// Import routes
+app.use(express.urlencoded({ extended: true }));
 app.use(routes);
-// Import PORT to run server
-connect.once('open', () => {
+
+db.once('open', () => {
     app.listen(PORT, () => {
-      console.log(`API server running on  ${PORT}!`);
+        console.log(`API server is now running on port ${PORT}`);
     });
-  });
+});
+ 
   
